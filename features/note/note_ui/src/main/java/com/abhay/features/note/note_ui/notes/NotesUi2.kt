@@ -12,9 +12,7 @@ fun NotesUiScreen2(
 //    viewModel: NotesViewModel,
 //    navController: NavHostController,
 ) {
-    Scaffold { paddingValues ->
 
-    }
 }
 
 @Preview

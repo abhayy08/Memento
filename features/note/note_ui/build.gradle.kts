@@ -61,8 +61,10 @@ dependencies {
 
     //modules
     implementation(project(":features:note:note_domain"))
+    implementation(project(":common"))
 
     //DaggerHilt
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 

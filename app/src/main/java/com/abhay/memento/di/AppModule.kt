@@ -2,6 +2,7 @@ package com.abhay.memento.di
 
 import android.app.Application
 import androidx.room.Room
+import com.abhay.common.DrawerStateManager
 import com.abhay.features.note.note_data.data.data_source.NoteDao
 import com.abhay.features.note.note_data.data.data_source.NoteDatabase
 import com.abhay.features.note.note_data.data.data_source.NoteDatabase_Impl

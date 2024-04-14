@@ -35,6 +35,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -45,34 +46,43 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.abhay.common.DrawerStateManager
 import com.abhay.features.note.note_ui.R
 import com.abhay.features.note.note_ui.navigation.NotesScreens
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NotesUiScreen(
     viewModel: NotesViewModel,
     navController: NavHostController,
+    drawerStateManager: DrawerStateManager
 ) {
     val state = viewModel.notesState.value
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val context = LocalContext.current
 
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
         floatingActionButton = { NotesFAB(onClick = { navController.navigate(route = NotesScreens.AddEditScreen.route) }) },
-        topBar = { NoteTopAppBar(
-            scrollBehavior,
-            onMenuClick = {
-
-            },
-            onActionClick = {
-                Toast.makeText(context,"You tapped your Profile", Toast.LENGTH_SHORT).show()
-            }
-        ) }
+        topBar = {
+            NoteTopAppBar(
+                scrollBehavior,
+                onMenuClick = {
+                    scope.launch {
+                        drawerStateManager.openDrawer()
+                    }
+                },
+                onActionClick = {
+                    Toast.makeText(context, "You tapped your Profile", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
     ) { paddingValues ->
         LazyVerticalStaggeredGrid(
             modifier = Modifier

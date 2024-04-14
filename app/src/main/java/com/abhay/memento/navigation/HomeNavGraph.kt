@@ -1,5 +1,6 @@
 package com.abhay.memento.navigation
 
+import androidx.compose.material3.DrawerState
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -7,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.abhay.common.di.AppModule.provideDrawerStateManager
 import com.abhay.features.note.note_ui.add_edit_note_screen.AddEditNotesScreen
 import com.abhay.features.note.note_ui.add_edit_note_screen.AddEditNotesViewModel
 import com.abhay.features.note.note_ui.notes.NotesUiScreen
@@ -14,7 +16,7 @@ import com.abhay.features.note.note_ui.notes.NotesViewModel
 
 @Composable
 fun HomeNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     NavHost(
         navController = navController,
@@ -22,7 +24,11 @@ fun HomeNavGraph(
     ) {
         composable(route = AppScreen.Notes.route) {
             val viewModel: NotesViewModel = hiltViewModel()
-            NotesUiScreen(viewModel = viewModel, navController = navController)
+            NotesUiScreen(
+                viewModel = viewModel,
+                navController = navController,
+                drawerStateManager = provideDrawerStateManager()
+            )
         }
         composable(
             route = AppScreen.AddEditNotes.route + "?noteId={noteId}",
@@ -34,6 +40,7 @@ fun HomeNavGraph(
             })
         ) {
             val viewModel: AddEditNotesViewModel = hiltViewModel()
+
             AddEditNotesScreen(
                 navController = navController,
                 titleState = viewModel.titleState.value,

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.abhay.memento.di.AppModule.provideDrawerStateManager
 import com.abhay.memento.navigation.AppScreen
 import com.abhay.memento.navigation.HomeNavGraph
 import kotlinx.coroutines.launch
@@ -37,7 +38,8 @@ fun MementoAppScreen(
     val currentRoute by navController.currentBackStackEntryAsState()
     val currentDestination = currentRoute?.destination
 
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
+    val drawerState = provideDrawerStateManager().drawerState
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)

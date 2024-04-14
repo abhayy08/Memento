@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":features:note:note_data"))
     implementation(project(":features:note:note_domain"))
     implementation(project(":features:note:note_ui"))
+    implementation(project(":common"))
 
     //Room
     val room_version = "2.6.1"
