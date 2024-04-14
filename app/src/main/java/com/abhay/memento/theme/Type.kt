@@ -1,4 +1,4 @@
-package com.abhay.memento.ui.theme
+package com.abhay.memento.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

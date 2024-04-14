@@ -1,4 +1,4 @@
-package com.abhay.memento.ui.theme
+package com.abhay.memento.theme
 
 import android.app.Activity
 import android.os.Build

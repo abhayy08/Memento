@@ -83,6 +83,10 @@ dependencies {
     // To use Kotlin Symbol Processing (KSP)
     ksp(libs.room.compiler)
 
+
+    // Compose dependencies
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-beta01")
+
     //Material Icons and Symbols
     implementation(libs.androidx.material.icons.extended)
 
