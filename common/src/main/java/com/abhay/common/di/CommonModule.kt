@@ -9,7 +9,7 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    @ProvideDrawerState // Use the custom annotation
+    @ProvideDrawerState
     fun provideDrawerStateManager(): DrawerStateManager {
         return DrawerStateManager
     }
