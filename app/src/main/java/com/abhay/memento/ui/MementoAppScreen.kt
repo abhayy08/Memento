@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.abhay.memento.di.AppModule.provideDrawerStateManager
+import com.abhay.common.di.AppModule.provideDrawerStateManager
 import com.abhay.memento.navigation.AppScreen
 import com.abhay.memento.navigation.HomeNavGraph
 import kotlinx.coroutines.launch
