@@ -59,6 +59,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.compose.ui:ui-tooling:1.6.5")
 
+
     //modules
     implementation(project(":features:note:note_domain"))
     implementation(project(":common"))

@@ -104,10 +104,7 @@ fun AddEditNotesScreen(
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
-                textStyle = TextStyle(
-                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-                    fontSize = 25.sp
-                )
+                fontSize = 25.sp
             )
             Spacer(modifier = Modifier.height(16.dp))
             TransparentTextField(
@@ -122,10 +119,7 @@ fun AddEditNotesScreen(
                 },
                 isHintVisible = contentState.isHintVisible,
                 singleLine = false,
-                textStyle = TextStyle(
-                    color = if (isSystemInDarkTheme()) Color.White else Color.Black,
-                    fontSize = 15.sp
-                )
+                fontSize = 18.sp
             )
 
         }

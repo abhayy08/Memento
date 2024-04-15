@@ -12,6 +12,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun TransparentTextField(
@@ -22,7 +25,8 @@ fun TransparentTextField(
     onFocusChange: (FocusState) -> Unit,
     isHintVisible: Boolean,
     singleLine: Boolean,
-    textStyle: TextStyle = TextStyle()
+    maxLines:Int = Int.MAX_VALUE,
+    fontSize: TextUnit
 ) {
     Box(
         modifier = modifier
@@ -31,16 +35,23 @@ fun TransparentTextField(
             value = text,
             onValueChange = onValueChange,
             singleLine = singleLine,
-            textStyle = textStyle,
+            textStyle = TextStyle(
+                color = if(isSystemInDarkTheme()) Color.White else Color.Black,
+                fontSize = fontSize
+            ),
             modifier = modifier
                 .fillMaxWidth()
                 .onFocusChanged {
                     onFocusChange(it)
                 },
+            maxLines = maxLines,
             cursorBrush = if(isSystemInDarkTheme()) SolidColor(Color.White) else SolidColor(Color.Black)
         )
         if(isHintVisible) {
-            Text(text = hint, style = textStyle)
+            Text(text = hint , style = TextStyle(
+                color = if(isSystemInDarkTheme()) Color.White.copy(alpha = 0.4f) else Color.Gray,
+                fontSize = fontSize
+            ))
         }
     }
 }

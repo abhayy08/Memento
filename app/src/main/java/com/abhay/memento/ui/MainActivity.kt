@@ -1,6 +1,8 @@
 package com.abhay.memento.ui
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -14,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
 import com.abhay.memento.theme.MementoTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,12 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(
-                scrim = Color.Transparent.toArgb(),
-                darkScrim = Color.Transparent.toArgb()
-            )
-        )
+        enableEdgeToEdge()
 
         setContent {
             val navController = rememberNavController()
