@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -32,8 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,57 +55,59 @@ fun AddEditNoteScreen1(
 
 
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {
-            AddEditFab(
-                onClick = {
-                    viewModel.onEvent(NotesEvent.SaveNote)
-                    onBackClick(ContainerState.Fab)
-                },
-                isDeleteAvailable = viewModel.isNote, // isNote
-                onDeleteClick = {
-                    viewModel.onEvent(NotesEvent.DeleteNote)
-                    onBackClick(ContainerState.Fab)
-                }
-            )
-        },
-        topBar = {
-            AddEditTopAppBar(
-                onBackClick = {
-                    onBackClick(ContainerState.Fab)
-                    viewModel.onEvent(NotesEvent.OnBackClick)
-                }
-            )
-        },
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .padding(24.dp)
-        ) {
-            TransparentTextField(
-                modifier = Modifier.fillMaxWidth(),
-                text = viewModel.noteTitle.value,
-                hint = "Title",
-                onValueChange = { viewModel.onEvent(NotesEvent.OnTitleChange(it)) },
-                onFocusChange = { viewModel.onEvent(NotesEvent.ChangeTitleFocus(it)) },
-                isHintVisible = viewModel.isTitleHintVisible.value,
-                singleLine = false,
-                maxLines = 3,
-                fontSize = 25.sp
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            TransparentTextField(
-                modifier = Modifier.fillMaxSize(),
-                text = viewModel.noteContent.value,
-                hint = "Content",
-                onValueChange = { viewModel.onEvent(NotesEvent.OnContentChange(it)) },
-                onFocusChange = { viewModel.onEvent(NotesEvent.ChangeContentFocus(it)) },
-                isHintVisible = viewModel.isContentHintVisible.value,
-                singleLine = false,
-                fontSize = 18.sp
-            )
+    Surface {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            floatingActionButton = {
+                AddEditFab(
+                    onClick = {
+                        viewModel.onEvent(NotesEvent.SaveNote)
+                        onBackClick(ContainerState.Fab)
+                    },
+                    isDeleteAvailable = viewModel.isNote, // isNote
+                    onDeleteClick = {
+                        viewModel.onEvent(NotesEvent.DeleteNote)
+                        onBackClick(ContainerState.Fab)
+                    }
+                )
+            },
+            topBar = {
+                AddEditTopAppBar(
+                    onBackClick = {
+                        onBackClick(ContainerState.Fab)
+                        viewModel.onEvent(NotesEvent.OnBackClick)
+                    }
+                )
+            },
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(24.dp)
+            ) {
+                TransparentTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = viewModel.noteTitle.value,
+                    hint = "Title",
+                    onValueChange = { viewModel.onEvent(NotesEvent.OnTitleChange(it)) },
+                    onFocusChange = { viewModel.onEvent(NotesEvent.ChangeTitleFocus(it)) },
+                    isHintVisible = viewModel.isTitleHintVisible.value,
+                    singleLine = false,
+                    maxLines = 3,
+                    fontSize = 25.sp
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                TransparentTextField(
+                    modifier = Modifier.fillMaxSize(),
+                    text = viewModel.noteContent.value,
+                    hint = "Content",
+                    onValueChange = { viewModel.onEvent(NotesEvent.OnContentChange(it)) },
+                    onFocusChange = { viewModel.onEvent(NotesEvent.ChangeContentFocus(it)) },
+                    isHintVisible = viewModel.isContentHintVisible.value,
+                    singleLine = false,
+                    fontSize = 18.sp
+                )
+            }
         }
     }
 }
@@ -126,7 +126,7 @@ fun AddEditFab(
     ) {
         if (isDeleteAvailable) {
             LaunchedEffect(isDeleteAvailable) {
-                delay(500) // Delay for 1 second
+                delay(1000) // Delay for a bit
                 animationDelay = true
 
             }
