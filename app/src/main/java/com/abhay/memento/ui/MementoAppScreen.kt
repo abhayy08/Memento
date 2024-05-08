@@ -8,12 +8,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DismissibleDrawerSheet
 import androidx.compose.material3.DismissibleNavigationDrawer
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -91,6 +89,14 @@ fun NavigationDrawerContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp, start = 24.dp, bottom = 8.dp)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth(0.7f)
+                .align(Alignment.CenterHorizontally),
+            thickness = 1.dp,
+            color = MaterialTheme.colorScheme.onBackground.copy(0.3f)
         )
         Spacer(modifier = Modifier.height(16.dp))
         screens.forEachIndexed { index, screen ->

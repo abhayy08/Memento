@@ -94,10 +94,6 @@ fun NotesUiScreen(
         }
     }
 
-    val interactionSource = remember {
-        MutableInteractionSource()
-    }
-
     Surface(
         color = MaterialTheme.colorScheme.onBackground
     ) {

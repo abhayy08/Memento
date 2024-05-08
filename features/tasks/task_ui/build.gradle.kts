@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -27,13 +29,18 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 
@@ -56,9 +63,17 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation("androidx.compose.ui:ui-tooling:1.6.7")
 
+    //modules
+    implementation(project(":common"))
+
     //Material Icons and Symbols
     implementation("androidx.compose.material:material-icons-extended:1.6.7")
 
     // Compose dependencies ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
+    //DaggerHilt
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }
