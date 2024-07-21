@@ -1,67 +1,46 @@
 package com.abhay.features.tasks.task_ui.task_screen.screens.add_edit_task
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Delete
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Save
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallFloatingActionButton
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.abhay.features.tasks.task_ui.task_screen.components.CustomTextField
 import com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen.TaskEvents
 import com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen.TaskViewModel
-import com.abhay.features.tasks.task_ui.task_screen.util.UiEvent
-import kotlinx.coroutines.delay
 
 @Composable
 fun AddEditTaskScreen(
     onBackClick: () -> Unit,
     viewModel: TaskViewModel = hiltViewModel(),
-    snackbarHostState: SnackbarHostState
+    onEvent: (TaskEvents) -> Unit
 ) {
 
-    var taskTitle = viewModel.taskTitle.value
-    var taskDescription = viewModel.taskDescription.value
-
-    LaunchedEffect(key1 = viewModel.uiEvent) {
-        viewModel.uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.showSnackBar -> {
-                    snackbarHostState.showSnackbar(
-                        event.message, actionLabel = event.action, duration = SnackbarDuration.Short
-                    )
-                }
-
-                else -> Unit
-            }
-        }
-    }
+    val taskTitle = viewModel.taskTitle.value
+    val taskDescription = viewModel.taskDescription.value
 
     BackHandler {
         viewModel.onEvent(TaskEvents.SaveTask)
@@ -70,77 +49,76 @@ fun AddEditTaskScreen(
 
     Surface {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .safeDrawingPadding(),
         ) { paddingValues ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    IconButton(onClick = { onBackClick() }) {
+                        Icon(imageVector = Icons.Rounded.Close, contentDescription = "Close")
+                    }
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "Add Task",
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+
+                Button(
+                    onClick = {
+                        onEvent(TaskEvents.SaveTask)
+                        onBackClick()
+                    }, colors = ButtonDefaults.buttonColors(Color.Transparent)
+                ) {
+                    Text(text = "Save", fontSize = 16.sp, color = MaterialTheme.colorScheme.primary)
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(24.dp)
+                    .padding(18.dp)
             ) {
-                TextField(
+                Text(
+                    text = "Task Title",
+                    fontSize = 14.sp,
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth(),
+                )
+                CustomTextField(
                     value = taskTitle,
-                    onValueChange = {
-                        viewModel.onEvent(TaskEvents.onTitleChange(it))
-                    }
+                    onValueChange = { onEvent(TaskEvents.onTitleChange(it)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 1,
+                    placeholder = "Enter a Task title"
                 )
                 Spacer(modifier = Modifier.height(32.dp))
-                TextField(
+//                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "Description",
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                CustomTextField(
                     value = taskDescription,
-                    onValueChange = {
-                        viewModel.onEvent(TaskEvents.onDescriptionChange(it))
-                    }
+                    onValueChange = { onEvent(TaskEvents.onDescriptionChange(it)) },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 10,
+                    placeholder = "Enter Description"
                 )
-                IconButton(onClick = {
-                    viewModel.onEvent(TaskEvents.SaveTask)
-                    onBackClick()
-                }) {
-                    Icon(imageVector = Icons.Rounded.Save, contentDescription = "Save")
-                }
             }
         }
     }
 
-}
-
-@Composable
-fun AddEditTaskFab(
-    onClick: () -> Unit,
-    isDeleteAvailable: Boolean,
-    onDeleteClick: () -> Unit
-) {
-    var animationDelay by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier.wrapContentHeight(),
-        horizontalAlignment = Alignment.End
-    ) {
-        if (isDeleteAvailable) {
-            LaunchedEffect(isDeleteAvailable) {
-                delay(1000) // Delay for a bit
-                animationDelay = true
-
-            }
-            AnimatedVisibility(
-                visible = animationDelay,
-                enter = slideInVertically { it + 16 },
-                exit = slideOutVertically { -it + 16 }
-            ) {
-                SmallFloatingActionButton(onClick = onDeleteClick) {
-                    Icon(imageVector = Icons.Outlined.Delete, contentDescription = "Delete Note")
-                }
-            }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        ExtendedFloatingActionButton(
-            text = { Text(text = "Save") },
-            icon = {
-                Icon(
-                    imageVector = Icons.Rounded.Check,
-                    contentDescription = "Save Note"
-                )
-            },
-            onClick = onClick
-        )
-
-    }
 }

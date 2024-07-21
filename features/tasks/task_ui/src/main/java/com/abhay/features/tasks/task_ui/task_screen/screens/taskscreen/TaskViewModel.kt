@@ -1,32 +1,34 @@
 package com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abhay.features.tasks.task_ui.task_screen.util.Routes
 import com.abhay.features.tasks.task_ui.task_screen.util.UiEvent
-import com.abhay.task_data.Todo
-import com.abhay.task_data.TodoRepository
+import com.abhay.task_data.Task
+import com.abhay.task_data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
-    private val repository: TodoRepository
+    private val repository: TaskRepository
 ) : ViewModel() {
 
-    val tasks = repository.getTodos()
+    val tasks = repository.getTasks()
 
-    private var taskState = mutableStateOf<Todo?>(null)
+    private var taskState = mutableStateOf<Task?>(null)
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    private var deleteTodo: Todo? = null
+    private var deleteTask: Task? = null
 
     private val _taskTitle = mutableStateOf<String>("")
     val taskTitle: State<String> = _taskTitle
@@ -45,8 +47,8 @@ class TaskViewModel @Inject constructor(
 
             is TaskEvents.OnDoneChange -> {
                 viewModelScope.launch {
-                    repository.insertTodo(
-                        event.todo.copy(
+                    repository.insertTask(
+                        event.task.copy(
                             isDone = event.isDone
                         )
                     )
@@ -54,13 +56,13 @@ class TaskViewModel @Inject constructor(
             }
 
             is TaskEvents.OnTodoClick -> {
-                sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TASK + "?todoId=${event.todo.id}"))
+                sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TASK + "?todoId=${event.task.id}"))
             }
 
             is TaskEvents.OnDeleteTodoClick -> {
                 viewModelScope.launch {
-                    deleteTodo = event.todo
-                    repository.deleteTodo(event.todo)
+                    deleteTask = event.task
+                    repository.deleteTask(event.task)
                     sendUiEvent(
                         UiEvent.showSnackBar(
                             message = "Task Deleted",
@@ -71,9 +73,9 @@ class TaskViewModel @Inject constructor(
             }
 
             is TaskEvents.OnUndoDeleteClick -> {
-                deleteTodo?.let { todo ->
+                deleteTask?.let { todo ->
                     viewModelScope.launch {
-                        repository.insertTodo(todo)
+                        repository.insertTask(todo)
                     }
                 }
             }
@@ -81,7 +83,7 @@ class TaskViewModel @Inject constructor(
             is TaskEvents.OpenOrCreateTask -> {
                 if (event.taskId != null) {
                     viewModelScope.launch {
-                        repository.getTodoById(event.taskId)?.let { task ->
+                        repository.getTaskById(event.taskId)?.let { task ->
                             taskState.value = task
                             _taskTitle.value = task.title
                             _taskDescription.value = task.description ?: ""
@@ -99,8 +101,8 @@ class TaskViewModel @Inject constructor(
                         sendUiEvent(UiEvent.showSnackBar("Title can't be empty"))
                         return@launch
                     }
-                    repository.insertTodo(
-                        Todo(
+                    repository.insertTask(
+                        Task(
                             title = _taskTitle.value,
                             description = _taskDescription.value,
                             isDone = false,
@@ -116,6 +118,18 @@ class TaskViewModel @Inject constructor(
             }
             is TaskEvents.onTitleChange -> {
                 _taskTitle.value = event.title
+            }
+
+            is TaskEvents.ClearAllCompletedTasks -> {
+                viewModelScope.launch {
+                    tasks.collect { taskList ->
+                        val completedTasks = taskList.filter { it.isDone }
+                        completedTasks.forEach { it->
+                            repository.deleteTask(it)
+                        }
+                    }
+                }
+                sendUiEvent(UiEvent.showSnackBar("Completed tasks cleared"))
             }
         }
     }

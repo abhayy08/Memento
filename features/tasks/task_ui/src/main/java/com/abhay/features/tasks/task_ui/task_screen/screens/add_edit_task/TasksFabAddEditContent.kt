@@ -1,4 +1,4 @@
-package com.abhay.features.tasks.task_ui.task_screen.screens.add_edit_tasks.something
+package com.abhay.features.tasks.task_ui.task_screen.screens.add_edit_task
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColor
@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.abhay.features.tasks.task_ui.task_screen.screens.add_edit_task.AddEditTaskScreen
+import com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen.TaskEvents
 
 @Composable
 fun TasksFabAddEditContent(
@@ -29,8 +29,8 @@ fun TasksFabAddEditContent(
     onClick: () -> Unit,
     containerState: ContainerState,
     onBackClick: (ContainerState) -> Unit,
-    snackbarHostState: SnackbarHostState,
-    isExpanded: Boolean
+    isExpanded: Boolean,
+    onEvent: (TaskEvents) -> Unit = {}
 ) {
 
     val transition = updateTransition(targetState = containerState, label = "")
@@ -91,7 +91,7 @@ fun TasksFabAddEditContent(
         .drawBehind { drawRoundRect(backgroundColor) }) { state ->
         when (state) {
             ContainerState.Fab -> {
-                ExtendedFloatingActionButton(text = { Text(text = "Save Note") }, icon = {
+                ExtendedFloatingActionButton(text = { Text(text = "Add Task") }, icon = {
                     Icon(
                         imageVector = Icons.Rounded.Add, contentDescription = "Add Note"
                     )
@@ -102,7 +102,7 @@ fun TasksFabAddEditContent(
             ContainerState.Fullscreen -> {
                 AddEditTaskScreen(
                     onBackClick = { onBackClick(ContainerState.Fab) },
-                    snackbarHostState = snackbarHostState,
+                    onEvent = onEvent,
                 )
             }
         }

@@ -32,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,13 +39,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen.TaskEvents
-import com.abhay.task_data.Todo
+import com.abhay.task_data.Task
 
 @Composable
 fun TaskItem(
-    task: Todo,
+    task: Task,
     onEvent: (TaskEvents) -> Unit,
     onItemClick: () -> Unit,
+    onDeleteClick : () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -70,8 +70,7 @@ fun TaskItem(
             })
         Divider(
             modifier = Modifier.width(36.dp),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.primary
+            thickness = 2.dp,
         )
         Card(modifier = Modifier
             .fillMaxWidth()
@@ -99,7 +98,7 @@ fun TaskItem(
                         textDecoration = textDecoration,
                         overflow = TextOverflow.Ellipsis
                     )
-                    if (task.description != null || task.description!!.isNotBlank()) {
+                    if (task.description!!.isNotBlank()) {
                         Text(
                             text = task.description!! + " ",
                             fontSize = 13.sp,
@@ -119,7 +118,7 @@ fun TaskItem(
                             .height(30.dp)
                             .width(1.dp))
                     IconButton(onClick ={
-                        onEvent(TaskEvents.OnDeleteTodoClick(task))
+                        onDeleteClick()
                     }) {
                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete")
                     }

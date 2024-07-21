@@ -11,10 +11,9 @@ import com.abhay.features.note.note_domain.use_cases.DeleteNote
 import com.abhay.features.note.note_domain.use_cases.GetNote
 import com.abhay.features.note.note_domain.use_cases.GetNotes
 import com.abhay.features.note.note_domain.use_cases.NotesUseCases
-import com.abhay.task_data.TodoDao
-import com.abhay.task_data.TodoDatabase
-import com.abhay.task_data.TodoRepository
-import com.abhay.task_data.TodoRepositoryImpl
+import com.abhay.task_data.TaskDatabase
+import com.abhay.task_data.TaskRepository
+import com.abhay.task_data.TaskRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,16 +57,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesTaskDatabase(app: Application): TodoDatabase {
+    fun providesTaskDatabase(app: Application): TaskDatabase {
         return Room.databaseBuilder(
-            app, TodoDatabase::class.java, "taskdb"
+            app, TaskDatabase::class.java, "taskdb"
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideTaskRepository(db: TodoDatabase) : TodoRepository {
-        return TodoRepositoryImpl(db.dao)
+    fun provideTaskRepository(db: TaskDatabase) : TaskRepository {
+        return TaskRepositoryImpl(db.dao)
     }
 
 }

@@ -4,12 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [Todo::class],
+    entities = [Task::class],
     version = 1,
     exportSchema = false
 )
-abstract class TodoDatabase: RoomDatabase() {
+abstract class TaskDatabase: RoomDatabase() {
 
-    abstract val dao: TodoDao
+    abstract val dao: TaskDao
 
 }
