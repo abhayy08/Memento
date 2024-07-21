@@ -18,7 +18,7 @@ import androidx.navigation.compose.composable
 import com.abhay.common.di.AppModule.provideDrawerStateManager
 import com.abhay.features.note.note_ui.notes.NotesUiScreen
 import com.abhay.features.note.note_ui.notes.NotesViewModel
-import com.abhay.features.tasks.task_ui.task_screen.TaskScreen
+import com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen.TaskScreen
 
 @Composable
 fun HomeNavGraph(

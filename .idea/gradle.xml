@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/features/note/note_domain" />
             <option value="$PROJECT_DIR$/features/note/note_ui" />
             <option value="$PROJECT_DIR$/features/tasks" />
+            <option value="$PROJECT_DIR$/features/tasks/task_data" />
             <option value="$PROJECT_DIR$/features/tasks/task_ui" />
           </set>
         </option>

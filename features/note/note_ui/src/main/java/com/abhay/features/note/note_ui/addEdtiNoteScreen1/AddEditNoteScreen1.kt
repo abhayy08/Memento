@@ -45,12 +45,12 @@ import kotlinx.coroutines.delay
 @Composable
 fun AddEditNoteScreen1(
     viewModel: NotesViewModel = hiltViewModel(),
-    onBackClick: (ContainerState) -> Unit
+    onBackClick: () -> Unit
 ) {
 
     BackHandler {
         viewModel.onEvent(NotesEvent.SaveNote)
-        onBackClick(ContainerState.Fab)
+        onBackClick()
     }
 
 
@@ -62,19 +62,19 @@ fun AddEditNoteScreen1(
                 AddEditFab(
                     onClick = {
                         viewModel.onEvent(NotesEvent.SaveNote)
-                        onBackClick(ContainerState.Fab)
+                        onBackClick()
                     },
                     isDeleteAvailable = viewModel.isNote, // isNote
                     onDeleteClick = {
                         viewModel.onEvent(NotesEvent.DeleteNote)
-                        onBackClick(ContainerState.Fab)
+                        onBackClick()
                     }
                 )
             },
             topBar = {
                 AddEditTopAppBar(
                     onBackClick = {
-                        onBackClick(ContainerState.Fab)
+                        onBackClick()
                         viewModel.onEvent(NotesEvent.OnBackClick)
                     }
                 )

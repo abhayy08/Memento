@@ -43,7 +43,7 @@ class NotesViewModel @Inject constructor(
 //    private var clickedNote: Note? = null
 
     init {
-        GetNotes()
+        getNotes()
     }
 
     fun onEvent(event: NotesEvent) {
@@ -146,7 +146,7 @@ class NotesViewModel @Inject constructor(
         }
     }
 
-    fun GetNotes() {
+    private fun getNotes() {
         getNotesJob?.cancel()
         getNotesJob = notesUseCases.getNotes()
             .onEach { notes ->

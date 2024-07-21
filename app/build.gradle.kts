@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":features:note:note_data"))
     implementation(project(":features:note:note_domain"))
     implementation(project(":features:tasks:task_ui"))
+    implementation(project(":features:tasks:task_data"))
     implementation(project(":features:note:note_ui"))
     implementation(project(":common"))
 
