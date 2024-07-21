@@ -12,6 +12,8 @@ import com.abhay.task_data.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -122,12 +124,11 @@ class TaskViewModel @Inject constructor(
 
             is TaskEvents.ClearAllCompletedTasks -> {
                 viewModelScope.launch {
-                    tasks.collect { taskList ->
-                        val completedTasks = taskList.filter { it.isDone }
+                    val completedTasks = tasks.first().filter { it.isDone }
+                    if(completedTasks.isNotEmpty())
                         completedTasks.forEach { it->
                             repository.deleteTask(it)
                         }
-                    }
                 }
                 sendUiEvent(UiEvent.showSnackBar("Completed tasks cleared"))
             }

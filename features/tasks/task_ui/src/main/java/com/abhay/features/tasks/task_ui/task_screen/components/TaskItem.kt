@@ -74,7 +74,7 @@ fun TaskItem(
         )
         Card(modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp)
+            .height(80.dp)
             .clickable {
                 onItemClick()
             }
