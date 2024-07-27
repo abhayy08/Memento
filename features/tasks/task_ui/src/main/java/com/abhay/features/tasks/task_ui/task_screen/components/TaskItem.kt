@@ -46,7 +46,7 @@ fun TaskItem(
     task: Task,
     onEvent: (TaskEvents) -> Unit,
     onItemClick: () -> Unit,
-    onDeleteClick : () -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -57,9 +57,8 @@ fun TaskItem(
     }
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(6.dp)
             .wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -84,7 +83,7 @@ fun TaskItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
 
-            ){
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -116,16 +115,19 @@ fun TaskItem(
                     Divider(
                         Modifier
                             .height(30.dp)
-                            .width(1.dp))
-                    IconButton(onClick ={
+                            .width(1.dp)
+                    )
+                    IconButton(onClick = {
                         onDeleteClick()
                     }) {
-                       Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete")
+                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete")
                     }
                 }
             }
         }
     }
+
+
 }
 
 @Preview(showBackground = true)

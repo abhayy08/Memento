@@ -3,8 +3,9 @@
 package com.abhay.features.tasks.task_ui.task_screen.screens.taskscreen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,7 +43,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -55,14 +55,14 @@ import com.abhay.features.tasks.task_ui.task_screen.screens.add_edit_task.TasksF
 import com.abhay.features.tasks.task_ui.task_screen.util.UiEvent
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TaskScreen(
     drawerStateManager: DrawerStateManager,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
-    val tasks = viewModel.tasks.collectAsState(initial = emptyList()).value.sortedBy { it.isDone }
+    val tasks = viewModel.tasks.collectAsState(initial = emptyList())
 
     val snackbarHostState = remember {
         SnackbarHostState()
@@ -133,12 +133,11 @@ fun TaskScreen(
                     state = listState,
                     contentPadding = PaddingValues(16.dp)
                 ) {
-                    items(tasks) { task ->
+                    items(
+                        items = tasks.value.sortedBy { it.isDone },
+                        key = { "${it.id ?: 0} - ${it.isDone} - ${it.title}" }
+                    ) { task ->
                         TaskItem(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .border(BorderStroke(2.dp, Color.Black))
-                                .padding(8.dp),
                             task = task,
                             onEvent = viewModel::onEvent,
                             onItemClick = {
@@ -148,6 +147,10 @@ fun TaskScreen(
                             onDeleteClick = {
                                 viewModel.onEvent(TaskEvents.OnDeleteTodoClick(task))
                             },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .animateItemPlacement()
+                                .padding(8.dp),
                         )
                     }
 

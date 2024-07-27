@@ -51,12 +51,13 @@ fun AddEditTaskScreen(
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-                .safeDrawingPadding(),
+                .safeDrawingPadding()
+                .padding(8.dp),
         ) { paddingValues ->
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 12.dp),
+                    .fillMaxWidth(),
+//                    .padding(end = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -87,7 +88,7 @@ fun AddEditTaskScreen(
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(18.dp)
+                    .padding(16.dp)
             ) {
                 Text(
                     text = "Task Title",
