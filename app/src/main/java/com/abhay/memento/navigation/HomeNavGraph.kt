@@ -45,7 +45,6 @@ fun HomeNavGraph(
             val viewModel: NotesViewModel = hiltViewModel()
             NotesUiScreen(
                 viewModel = viewModel,
-                navController = navController,
                 drawerStateManager = provideDrawerStateManager()
             )
         }

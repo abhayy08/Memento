@@ -47,7 +47,7 @@ fun CustomTextField(
     BasicTextField(
         value = value,
         onValueChange = { onValueChange(it) },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .onFocusChanged {
                 borderColor = if (it.isFocused) materialColor.copy(0.8f) else Color.Transparent

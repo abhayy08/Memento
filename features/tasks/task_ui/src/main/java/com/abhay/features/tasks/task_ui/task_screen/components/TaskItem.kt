@@ -62,11 +62,15 @@ fun TaskItem(
             modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.Start,
         ) {
-            Text(text = task.title)
+            Text(
+                text = task.title,
+                textDecoration = textDecoration
+            )
             if (task.description!!.isNotBlank()) {
                 Text(
                     text = task.description ?: "",
                     fontSize = 11.sp,
+                    textDecoration = textDecoration,
                     modifier = Modifier.alpha(0.7f)
                 )
             }

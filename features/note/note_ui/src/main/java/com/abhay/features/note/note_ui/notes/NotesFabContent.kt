@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.abhay.features.note.note_ui.addEdtiNoteScreen1.AddEditNoteScreen1
+import com.abhay.features.note.note_ui.addEdtiNoteScreen.AddEditNoteScreen
 
 @Composable
 fun NotesFABContent(
@@ -99,7 +99,7 @@ fun NotesFABContent(
             }
 
             ContainerState.Fullscreen -> {
-                AddEditNoteScreen1(onBackClick = { onBackClick(ContainerState.Fab) })
+                AddEditNoteScreen(onBackClick = { onBackClick(ContainerState.Fab) })
             }
         }
     }

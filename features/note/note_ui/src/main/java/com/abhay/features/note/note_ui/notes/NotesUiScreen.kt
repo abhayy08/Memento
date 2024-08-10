@@ -50,7 +50,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun NotesUiScreen(
     viewModel: NotesViewModel,
-    navController: NavHostController,
     drawerStateManager: DrawerStateManager
 ) {
     val state = viewModel.notesState.value

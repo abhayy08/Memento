@@ -33,10 +33,6 @@ import kotlinx.coroutines.launch
 fun MementoAppScreen(
     navController: NavHostController
 ) {
-    val currentRoute by navController.currentBackStackEntryAsState()
-    val currentDestination = currentRoute?.destination
-
-
     val drawerState = provideDrawerStateManager().drawerState
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable {

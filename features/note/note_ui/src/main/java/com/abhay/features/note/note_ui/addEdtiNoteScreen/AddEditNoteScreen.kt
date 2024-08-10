@@ -1,4 +1,4 @@
-package com.abhay.features.note.note_ui.addEdtiNoteScreen1
+package com.abhay.features.note.note_ui.addEdtiNoteScreen
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -37,13 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.abhay.features.note.note_ui.components.TransparentTextField
-import com.abhay.features.note.note_ui.notes.ContainerState
 import com.abhay.features.note.note_ui.notes.NotesEvent
 import com.abhay.features.note.note_ui.notes.NotesViewModel
 import kotlinx.coroutines.delay
 
 @Composable
-fun AddEditNoteScreen1(
+fun AddEditNoteScreen(
     viewModel: NotesViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {

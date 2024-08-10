@@ -174,7 +174,6 @@ fun TaskScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TasksTopAppbar(
-    modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior,
     onMenuClick: () -> Unit,
     onActionClick: () -> Unit
