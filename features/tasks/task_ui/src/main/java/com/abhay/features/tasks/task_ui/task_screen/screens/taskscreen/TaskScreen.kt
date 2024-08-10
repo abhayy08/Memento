@@ -131,7 +131,6 @@ fun TaskScreen(
                 LazyColumn(
                     modifier = Modifier.padding(paddingValues),
                     state = listState,
-                    contentPadding = PaddingValues(16.dp)
                 ) {
                     items(
                         items = tasks.value.sortedBy { it.isDone },
@@ -150,11 +149,11 @@ fun TaskScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .animateItemPlacement()
-                                .padding(8.dp),
+                                .padding(vertical = 2.dp)
                         )
                     }
-
                 }
+
             }
             TasksFabAddEditContent(
                 onClick = {
