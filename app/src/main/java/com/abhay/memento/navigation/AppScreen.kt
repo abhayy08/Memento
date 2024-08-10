@@ -28,10 +28,4 @@ sealed class AppScreen(
         title = "",
         icon = Icons.Outlined.EditNote
     )
-
-    data object Reminders : AppScreen(
-        route = "REMINDERS",
-        title = "Reminders",
-        icon = Icons.Rounded.NotificationAdd
-    )
 }

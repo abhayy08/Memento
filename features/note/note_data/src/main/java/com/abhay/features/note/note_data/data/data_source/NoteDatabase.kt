@@ -8,7 +8,8 @@ import com.abhay.features.note.note_domain.model.Note
     entities = [
         Note::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class NoteDatabase: RoomDatabase() {
 

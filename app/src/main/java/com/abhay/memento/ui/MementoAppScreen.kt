@@ -44,7 +44,7 @@ fun MementoAppScreen(
     }
 
     val screens = listOf(
-        AppScreen.Notes, AppScreen.Tasks, AppScreen.Reminders
+        AppScreen.Notes, AppScreen.Tasks
     )
 
     DismissibleNavigationDrawer(

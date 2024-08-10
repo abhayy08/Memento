@@ -133,46 +133,16 @@ fun TaskItem(
 @Preview(showBackground = true)
 @Composable
 private fun Asd() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(6.dp)
-            .height(80.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        CircularCheckbox(modifier = Modifier.clip(RoundedCornerShape(100.dp)),
-            checked = false,
-            onCheckedChange = {})
-        Divider(modifier = Modifier.width(36.dp))
-        Card(
-            modifier = Modifier.fillMaxWidth()
-
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Text(text = "Do Laundry")
-                    Text(
-                        text = "Kapde Dhole Jaake Bdsk", color = Color.Gray
-                    )
-                }
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Task")
-                }
-                Row {
-                    Divider()
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete")
-                    }
-                }
-            }
-        }
-    }
+    TaskItem(
+        task = Task(
+            title = "Do Laundry",
+            description = "Do laundry before bed",
+            isDone = false
+        ),
+        onEvent = {},
+        onItemClick = { /*TODO*/ },
+        onDeleteClick = { /*TODO*/ }
+    )
 }
 
 @Composable

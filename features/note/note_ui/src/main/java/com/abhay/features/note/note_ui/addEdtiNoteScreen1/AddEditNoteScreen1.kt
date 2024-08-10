@@ -126,9 +126,8 @@ fun AddEditFab(
     ) {
         if (isDeleteAvailable) {
             LaunchedEffect(isDeleteAvailable) {
-                delay(1000) // Delay for a bit
+                delay(300)
                 animationDelay = true
-
             }
             AnimatedVisibility(
                 visible = animationDelay,
